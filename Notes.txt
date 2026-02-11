@@ -5,5 +5,4 @@ To do list
 Add escape sequence to movePiece
 
 
-git check
 
