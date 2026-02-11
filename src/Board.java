@@ -1,6 +1,4 @@
-// This is where the magic happens
-// This class contain all data about the board, what pieces are on it, and where
-//the movePiece function is also here. Will probably move it to Main/Dedicated game manger class. but for now i'm lazy
+// This class contain all data about the board, what pieces are on it, and where. The movePiece function is also here
 
 import java.util.Scanner;
 
@@ -10,15 +8,10 @@ public class Board {
     private int numRows = 8;
     private int numCols = 8;
     private Piece[][] boardData;
-    // Above is the big money piece. I store that board stat as an 8x8 array of
-    // Piece objects. spaces without objects are considered null for future logic.
-    // This kinda scares me. I logically understand it, but did not expect it to
-    // work.
+    // I stored that board stat as an 8x8 array of Piece objects. Spaces without
+    // objects are considered null for future logic.
 
-    // This Constructor ets a board size. I don't forsee needing a non
-    // 8x8 board, but allowing customizability felt like best practices, and didn't
-    // add much
-    // difficulty.
+    // This Constructor sets a board size. Should probably hard code this instead.
     public Board(int rows, int cols) {
         this.numRows = rows;
         this.numCols = cols;
@@ -68,19 +61,19 @@ public class Board {
         System.out.println("   a  b  c  d  e  f  g  h");
     }
 
-    // simple getter
+    // simple getter for main
     public Piece[][] getBoardData() {
         return boardData;
     }
 
-    // big money function. Handles all input and output of moving the pieces. calls
-    // findPiece to determine where the piece currently is, and then moveTo to check
-    // if that square is legal, and if it is, update the pieces location in the
-    // boardData array
+    // Handles all input and output of moving the pieces. Calls findPiece to
+    // determine where the piece currently is, and then moveTo to check if that
+    // square is legal, and if it is, update the pieces location in the boardData
+    // array.
     public void movePiece(Scanner scanner, Piece[][] boardData) {
 
         // runs in an endless look until the user enters a valid input. will add escape
-        // later
+        // later. Resets user to beginning if they input something invalid.
         while (true) {
 
             System.out.print("Enter the square of the piece you want to move: ");
@@ -157,7 +150,7 @@ public class Board {
             return false;
         }
 
-        //
+        // Update the boardData array.
         boardData[destRow][destCol] = boardData[movedRow][movedCol];
         boardData[movedRow][movedCol] = null;
         return true;
