@@ -1,22 +1,23 @@
 // This is where the magic happens
 // This class contain all data about the board, what pieces are on it, and where
-//the movePiece function is also here. Will probably move it to Main/Dedicated game manger class. but for now Im lazy
+//the movePiece function is also here. Will probably move it to Main/Dedicated game manger class. but for now i'm lazy
 
 import java.util.Scanner;
 
 public class Board {
 
-    // Initialized Variables
+    // Initialized Variables. All hardcoded to 8x8
     private int numRows = 8;
     private int numCols = 8;
     private Piece[][] boardData;
-
     // Above is the big money piece. I store that board stat as an 8x8 array of
     // Piece objects. spaces without objects are considered null for future logic.
     // This kinda scares me. I logically understand it, but did not expect it to
-    // work like this Constructor. Sets a board size. I don't forsee needing a non
-    // 8x8 board, but
-    // allowing customizability felt like best practices, and didn't add much
+    // work.
+
+    // This Constructor ets a board size. I don't forsee needing a non
+    // 8x8 board, but allowing customizability felt like best practices, and didn't
+    // add much
     // difficulty.
     public Board(int rows, int cols) {
         this.numRows = rows;
@@ -27,7 +28,7 @@ public class Board {
     }
 
     // This function sets the pieces in their initial places. One side only until I
-    // figure out how i want to differentiate black and white
+    // figure out how I want to differentiate black and white
     private void initializeBoard() {
 
         for (int i = 0; i < 8; i++) {
@@ -79,7 +80,7 @@ public class Board {
     public void movePiece(Scanner scanner, Piece[][] boardData) {
 
         // runs in an endless look until the user enters a valid input. will add escape
-        // sequnce later
+        // later
         while (true) {
 
             System.out.print("Enter the square of the piece you want to move: ");
@@ -150,7 +151,7 @@ public class Board {
         int destRow = numRows - (rankTo - '0');
 
         // Giant mess, but this has all the possible invalid inputs a user could enter
-        // that i could think of. May split it up for readability
+        // that I could think of. May split it up for readability
         if (movedRow < 0 || movedRow >= numRows || movedCol < 0 || movedCol >= numCols || destRow < 0
                 || destRow >= numRows || destCol < 0 || destCol >= numCols || boardData[movedRow][movedCol] == null) {
             return false;

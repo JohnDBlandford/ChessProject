@@ -12,7 +12,8 @@ public class Main {
 
     }
 
-    public static void move(Board board) {
+    // helper function to declutter main
+    private static void move(Board board) {
         String exitCheck = "Null";
         while (!exitCheck.toLowerCase().equals("n")) {
             board.movePiece(scanner, board.getBoardData());
