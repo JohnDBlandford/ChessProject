@@ -6,19 +6,23 @@ public class Main {
     public static void main(String[] args) {
 
         Board board = new Board(8, 8);
-
         board.printBoard();
-        move(board);
+        String quitCheck = "";
+        System.out.println("Type \"EXIT\" to quit. type anything else to continue");
+        quitCheck = scanner.nextLine();
+        while (!quitCheck.toLowerCase().equals("exit")) {
+            board.printBoard();
+            move(board);
+        }
 
     }
 
-    // helper function to declutter main
     private static void move(Board board) {
-        String exitCheck = "Null";
-        while (!exitCheck.toLowerCase().equals("n")) {
+        String quitCheck = "";
+        while (!quitCheck.toLowerCase().equals("exit")) {
             board.movePiece(scanner, board.getBoardData());
-            System.out.println("Do you want to make another move (y) or exit (n)?");
-            exitCheck = scanner.next();
+            System.out.println("Type \"EXIT\" to quit. type anything else to continue");
+            quitCheck = scanner.nextLine();
         }
 
     }
