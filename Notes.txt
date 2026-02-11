@@ -1,8 +1,0 @@
-All comments are as of Feb 11
-
-To do list
-
-Add escape sequence to movePiece
-
-
-
