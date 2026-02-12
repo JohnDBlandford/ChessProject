@@ -18,7 +18,7 @@ public class Main {
         while (!exitCheck.toLowerCase().equals("n")) {
             board.movePiece(scanner, board.getBoardData());
             System.out.println("Do you want to make another move (y) or exit (n)?");
-            exitCheck = scanner.next();
+            exitCheck = scanner.nextLine();
         }
 
     }
