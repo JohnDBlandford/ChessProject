@@ -15,7 +15,7 @@ public class Board {
     }
 
     private void initializeBoard() {
-        boardData[7][4] = new Piece("K");
+        boardData[3][3] = new Piece("K");
     }
 
     public void printBoard() {
