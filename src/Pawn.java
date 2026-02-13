@@ -1,92 +1,51 @@
 
 public class Pawn extends Piece {
 
-    private Color color;
-
     Pawn(Color color) {
         super(color);
     }
 
-    public boolean isLegalMove(int destCol, int destRow, int movedCol, int movedRow, Piece[][] boardData) {
+    @Override
+    public boolean isLegalMove(int movedRow, int movedCol, int destRow, int destCol, Piece[][] boardData) {
 
-        if (this.color == Color.WHITE) {
-            if (destRow > movedRow) {
-
-                return false;
-
-            }
-
-            if (movedRow != 6 && Math.abs(destRow - destRow) > 1) {
-
-                return false;
-            }
-
-            if (movedRow == 6 && Math.abs(destRow - destRow) > 2) {
-
-                return false;
-            }
-
-            if (Math.abs(movedCol - destCol) > 0 && Board.isOccupied(boardData) == false) {
-
-                return false;
-            }
-
-            if (Math.abs(movedCol - destCol) > 0 && Board.isOccupied(boardData) == true && getColor() == Color.WHITE) {
-
-                return false;
-            }
-
-            if (Math.abs(movedCol - destCol) > 1 && Board.isOccupied(boardData) == true) {
-
-                return false;
-            }
-
-            return true;
-
+        int direction = 0;
+        if (getColor() == Color.WHITE) {
+            direction = -1;
+        } else {
+            direction = 1;
         }
 
-        if (this.color == Color.BLACK) {
-            if (destRow < movedRow) {
-                return false;
-            }
-
-            if (movedRow != 6 && Math.abs(destRow - destRow) > 1) {
-                return false;
-            }
-
-            if (movedRow == 6 && Math.abs(destRow - destRow) > 2) {
-                return false;
-            }
-
-            if (Math.abs(movedCol - destCol) > 0 && Board.isOccupied(boardData) == false) {
-                return false;
-            }
-
-            if (Math.abs(movedCol - destCol) > 0 && Board.isOccupied(boardData) == true && getColor() == Color.WHITE) {
-                return false;
-            }
-
-            if (Math.abs(movedCol - destCol) > 1 && Board.isOccupied(boardData) == true) {
-                return false;
-            }
-
-            return true;
-
-        }
-
-        else {
+        // Forward one square
+        if (movedCol == destCol &&
+                destRow == movedRow + direction &&
+                boardData[destRow][destCol] == null) {
             return true;
         }
 
+        // Initial double move
+        if (movedCol == destCol &&
+                ((getColor() == Color.WHITE && movedRow == 6) ||
+                        (getColor() == Color.BLACK && movedRow == 1))
+                &&
+                destRow == movedRow + 2 * direction &&
+                boardData[destRow][destCol] == null) {
+            return true;
+        }
+
+        // Capture
+        if (Math.abs(movedCol - destCol) == 1 &&
+                destRow == movedRow + direction &&
+                boardData[destRow][destCol] != null &&
+                boardData[destRow][destCol].getColor() != getColor()) {
+            return true;
+        }
+
+        return false;
     }
 
-    public Color getColor() {
-        return this.color;
-    }
-
+    @Override
     public String getSymbol() {
-
-        if (this.color == Color.WHITE) {
+        if (getColor() == Color.WHITE) {
             return "♙";
         } else {
             return "♟";

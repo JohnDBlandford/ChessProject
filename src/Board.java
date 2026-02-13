@@ -159,9 +159,9 @@ public class Board {
         return true;
     }
 
-    public static boolean isOccupied(Piece[][] boardData) {
+    public static boolean isOccupied(Piece[][] boardData, int destRow, int destCol) {
 
-        if (boardData != null) {
+        if (boardData[destRow][destCol] != null) {
             return true;
         } else {
             return false;
