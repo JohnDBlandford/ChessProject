@@ -46,9 +46,9 @@ public class Pawn extends Piece {
     @Override
     public String getSymbol() {
         if (getColor() == Color.WHITE) {
-            return "♙";
-        } else {
             return "♟";
+        } else {
+            return "♙";
         }
 
     }

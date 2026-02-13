@@ -6,20 +6,42 @@ public class Main {
     public static void main(String[] args) {
 
         Board board = new Board(8, 8);
-
+        int turnCount = 0;
+        Color playerTurn = Color.WHITE;
         board.printBoard();
-        move(board);
+
+        while (true) {
+            turnCount += 1;
+            move(board, turnCount, playerTurn);
+
+        }
 
     }
 
-    // helper function to declutter main
-    private static void move(Board board) {
-        String exitCheck = "Null";
-        while (!exitCheck.toLowerCase().equals("n")) {
-            board.movePiece(scanner, board.getBoardData());
-            System.out.println("Do you want to make another move (y) or exit (n)?");
-            exitCheck = scanner.nextLine();
+    public static Color playerTurn(Color playerTurn, int turnCount) {
+
+        if (turnCount % 2 != 0) {
+            return Color.WHITE;
+        } else {
+            return Color.BLACK;
         }
+
+    }
+
+    private static void move(Board board, int turnCount, Color playerTurn) {
+
+        playerTurn = playerTurn(playerTurn, turnCount);
+
+        System.out.println("This is turn " + turnCount);
+        System.out.println("It is the " + playerTurn + " Player's turn");
+        board.movePiece(scanner, board.getBoardData(), turnCount, playerTurn);
+        board.printBoard();
+
+    }
+
+    public boolean isPlayerTurn(int turnCount) {
+
+        return true;
 
     }
 

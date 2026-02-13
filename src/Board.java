@@ -23,6 +23,9 @@ public class Board {
     private void initializeBoard() {
 
         for (int i = 0; i < 8; i++) {
+            boardData[1][i] = new Pawn(Color.BLACK);
+        }
+        for (int i = 0; i < 8; i++) {
             boardData[6][i] = new Pawn(Color.WHITE);
         }
 
@@ -50,7 +53,7 @@ public class Board {
                 if (piece != null) {
                     System.out.print(" " + piece.getSymbol() + " ");
                 } else {
-                    System.out.print((row + col) % 2 == 0 ? " □ " : " ■ ");
+                    System.out.print((row + col) % 2 == 0 ? " ■ " : " □ ");
                 }
             }
             System.out.println();
@@ -68,19 +71,21 @@ public class Board {
     // determine where the piece currently is, and then moveTo to check if that
     // square is legal, and if it is, update the pieces location in the boardData
     // array.
-    public void movePiece(Scanner scanner, Piece[][] boardData) {
+    public void movePiece(Scanner scanner, Piece[][] boardData, int turnCount, Color playerTurn) {
 
-        // runs in an endless look until the user enters a valid input. will add escape
-        // later. Resets user to beginning if they input something invalid.
         while (true) {
 
             System.out.print("Enter the square of the piece you want to move: ");
             String movedSquare = scanner.nextLine();
-
             Piece movedPiece = findPiece(movedSquare, boardData);
 
             if (movedPiece == null) {
                 System.out.println("There is no piece there. Try again.");
+                continue;
+            }
+
+            if (movedPiece.getColor() != playerTurn) {
+                System.out.println("You cannot move an opponent's piece");
                 continue;
             }
 
@@ -91,7 +96,7 @@ public class Board {
                 System.out.println("That Square is not available. Try Again");
                 continue;
             }
-            printBoard();
+
             break;
         }
     }
