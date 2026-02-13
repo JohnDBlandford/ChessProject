@@ -1,17 +1,18 @@
-// Piece Class
-// Every Piece has a symbol representing them
-// Will later add individual piece behaviors but this works for now
+public abstract class Piece {
 
-public class Piece {
+    Color color;
 
-    private String symbol;
+    Piece(Color color) {
+        this.color = color;
 
-    public Piece(String symbol) {
-        this.symbol = symbol;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public Color getColor() {
+        return this.color;
     }
+
+    public abstract boolean isLegalMove(int fromRow, int fromCol, int toRow, int toCol, Piece[][] boardData);
+
+    protected abstract String getSymbol();
 
 }

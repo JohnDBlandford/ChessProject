@@ -20,22 +20,20 @@ public class Board {
 
     }
 
-    // This function sets the pieces in their initial places. One side only until I
-    // figure out how I want to differentiate black and white
     private void initializeBoard() {
 
         for (int i = 0; i < 8; i++) {
-            boardData[6][i] = new Piece("P");
+            boardData[6][i] = new Pawn(Color.WHITE);
         }
 
-        boardData[7][0] = new Piece("R");
-        boardData[7][1] = new Piece("N");
-        boardData[7][2] = new Piece("B");
-        boardData[7][3] = new Piece("Q");
-        boardData[7][4] = new Piece("K");
-        boardData[7][5] = new Piece("B");
-        boardData[7][6] = new Piece("N");
-        boardData[7][7] = new Piece("R");
+        // boardData[7][0] = new Piece("R");
+        // boardData[7][1] = new Piece("N");
+        // boardData[7][2] = new Piece("B");
+        // boardData[7][3] = new Piece("Q");
+        // boardData[7][4] = new Piece("K");
+        // boardData[7][5] = new Piece("B");
+        // boardData[7][6] = new Piece("N");
+        // boardData[7][7] = new Piece("R");
 
     }
 
@@ -150,9 +148,24 @@ public class Board {
             return false;
         }
 
+        Piece movedPiece = boardData[movedRow][movedCol];
+        if (!movedPiece.isLegalMove(movedRow, movedCol, destRow, destCol, boardData)) {
+            return false;
+        }
+
         // Update the boardData array.
         boardData[destRow][destCol] = boardData[movedRow][movedCol];
         boardData[movedRow][movedCol] = null;
         return true;
+    }
+
+    public static boolean isOccupied(Piece[][] boardData) {
+
+        if (boardData != null) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
