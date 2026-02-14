@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Pieces.Pawn;
 import Pieces.Piece;
 import Pieces.Rook;
+import Pieces.Bishop;
 import util.Color;
 
 public class Board {
@@ -36,13 +37,17 @@ public class Board {
 
         boardData[7][0] = new Rook(Color.WHITE);
         boardData[7][7] = new Rook(Color.WHITE);
-        boardData[0][7] = new Rook(Color.BLACK);
         boardData[0][0] = new Rook(Color.BLACK);
+        boardData[0][7] = new Rook(Color.BLACK);
+        boardData[7][5] = new Bishop(Color.WHITE);
+        boardData[7][2] = new Bishop(Color.WHITE);
+        boardData[0][5] = new Bishop(Color.BLACK);
+        boardData[0][2] = new Bishop(Color.BLACK);
         // boardData[7][1] = new Piece("N");
-        // boardData[7][2] = new Piece("B");
+
         // boardData[7][3] = new Piece("Q");
         // boardData[7][4] = new Piece("K");
-        // boardData[7][5] = new Piece("B");
+
         // boardData[7][6] = new Piece("N");
 
     }
