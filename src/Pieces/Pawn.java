@@ -1,7 +1,10 @@
+package Pieces;
+
+import util.Color;
 
 public class Pawn extends Piece {
 
-    Pawn(Color color) {
+    public Pawn(Color color) {
         super(color);
     }
 
@@ -23,20 +26,15 @@ public class Pawn extends Piece {
         }
 
         // Initial double move
-        if (movedCol == destCol &&
-                ((getColor() == Color.WHITE && movedRow == 6) ||
-                        (getColor() == Color.BLACK && movedRow == 1))
-                &&
-                destRow == movedRow + 2 * direction &&
-                boardData[destRow][destCol] == null) {
+        if (movedCol == destCol
+                && ((getColor() == Color.WHITE && movedRow == 6) || (getColor() == Color.BLACK && movedRow == 1))
+                && destRow == movedRow + 2 * direction && boardData[destRow][destCol] == null) {
             return true;
         }
 
         // Capture
-        if (Math.abs(movedCol - destCol) == 1 &&
-                destRow == movedRow + direction &&
-                boardData[destRow][destCol] != null &&
-                boardData[destRow][destCol].getColor() != getColor()) {
+        if (Math.abs(movedCol - destCol) == 1 && destRow == movedRow + direction && boardData[destRow][destCol] != null
+                && boardData[destRow][destCol].getColor() != getColor()) {
             return true;
         }
 

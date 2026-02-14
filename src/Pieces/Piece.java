@@ -1,3 +1,7 @@
+package Pieces;
+
+import util.Color;
+
 public abstract class Piece {
 
     private Color color;
@@ -13,6 +17,6 @@ public abstract class Piece {
 
     public abstract boolean isLegalMove(int fromRow, int fromCol, int toRow, int toCol, Piece[][] boardData);
 
-    protected abstract String getSymbol();
+    public abstract String getSymbol();
 
 }
