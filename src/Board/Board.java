@@ -8,6 +8,7 @@ import Pieces.Rook;
 import Pieces.Bishop;
 import Pieces.Knight;
 import Pieces.Queen;
+import Pieces.King;
 import util.Color;
 
 public class Board {
@@ -51,7 +52,8 @@ public class Board {
         boardData[7][6] = new Knight(Color.WHITE);
         boardData[0][1] = new Knight(Color.BLACK);
         boardData[0][6] = new Knight(Color.BLACK);
-        // boardData[7][4] = new Piece("K");
+        boardData[7][4] = new King(Color.WHITE);
+        boardData[0][4] = new King(Color.BLACK);
 
     }
 
