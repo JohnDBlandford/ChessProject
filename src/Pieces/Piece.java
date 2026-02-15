@@ -8,7 +8,6 @@ public abstract class Piece {
 
     Piece(Color color) {
         this.color = color;
-
     }
 
     public Color getColor() {
