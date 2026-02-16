@@ -1,6 +1,6 @@
 package Pieces;
 
-import util.Color;
+import enums.Color;
 
 public class King extends Piece {
 

@@ -5,22 +5,18 @@ import java.util.Scanner;
 import Pieces.Pawn;
 import Pieces.Piece;
 import Pieces.Rook;
+import enums.Color;
 import Pieces.Bishop;
 import Pieces.Knight;
 import Pieces.Queen;
 import Pieces.King;
-import util.Color;
 
 public class Board {
 
-    // Initialized Variables. All hardcoded to 8x8
     private int numRows = 8;
     private int numCols = 8;
     private Piece[][] boardData;
-    // I stored that board stat as an 8x8 array of Piece objects. Spaces without
-    // objects are considered null for future logic.
 
-    // This Constructor sets a board size. Should probably hard code this instead.
     public Board(int rows, int cols) {
         this.numRows = rows;
         this.numCols = cols;
@@ -57,15 +53,13 @@ public class Board {
 
     }
 
-    // This function prints the board in its current state from the boardData array
     public void printBoard() {
         for (int row = 0; row < 8; row++) {
             int rank = 8 - row;
             System.out.print(rank + " ");
 
             for (int col = 0; col < 8; col++) {
-                // Checks if there is a piece stored in the array. If not, prints either a black
-                // or white square based on an alternating grid.
+
                 Piece piece = this.boardData[row][col];
                 if (piece != null) {
                     System.out.print(" " + piece.getSymbol() + " ");
@@ -79,15 +73,10 @@ public class Board {
         System.out.println("   a  b  c  d  e  f  g  h");
     }
 
-    // simple getter for main
     public Piece[][] getBoardData() {
         return boardData;
     }
 
-    // Handles all input and output of moving the pieces. Calls findPiece to
-    // determine where the piece currently is, and then moveTo to check if that
-    // square is legal, and if it is, update the pieces location in the boardData
-    // array.
     public void movePiece(Scanner scanner, Piece[][] boardData, int turnCount, Color playerTurn) {
 
         while (true) {
@@ -106,7 +95,7 @@ public class Board {
                 continue;
             }
 
-            System.out.print("Enter the destination square (e.g. a3): ");
+            System.out.print("Where do you want to move that piece?: ");
             String destSquare = scanner.nextLine();
 
             if (!moveTo(movedSquare, destSquare, boardData)) {
@@ -118,7 +107,6 @@ public class Board {
         }
     }
 
-    // helper function to find the piece the user wants to move
     private Piece findPiece(String movedSquare, Piece[][] boardData) {
 
         if (movedSquare.length() < 2) {
@@ -146,13 +134,10 @@ public class Board {
     // actually move the piece.
     private boolean moveTo(String movedSquare, String finalSquare, Piece[][] boardData) {
 
-        // stops array out of bounds errors
         if (finalSquare.length() < 2) {
             return false;
         }
 
-        // converts rank and file (user input) into row and column. Will probably change
-        // the boardData to use rank and file at some point, but this works for now.
         char fileFrom = movedSquare.charAt(0);
         char rankFrom = movedSquare.charAt(1);
         char fileTo = finalSquare.charAt(0);

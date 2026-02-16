@@ -1,8 +1,6 @@
-
 import java.util.Scanner;
-
 import Board.Board;
-import util.Color;
+import enums.Color;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
