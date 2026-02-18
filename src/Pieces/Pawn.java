@@ -1,6 +1,6 @@
 package Pieces;
 
-import enums.Color;
+import util.Color;
 
 public class Pawn extends Piece {
 
