@@ -1,4 +1,4 @@
-package Board;
+package Game;
 
 import java.util.Scanner;
 
@@ -9,11 +9,7 @@ import enums.Color;
 import Pieces.Bishop;
 import Pieces.Knight;
 import Pieces.Queen;
-<<<<<<< HEAD
 import Pieces.King;
-=======
-import util.Color;
->>>>>>> parent of 9b21c0d (King added)
 
 public class Board {
 
@@ -52,7 +48,8 @@ public class Board {
         boardData[7][6] = new Knight(Color.WHITE);
         boardData[0][1] = new Knight(Color.BLACK);
         boardData[0][6] = new Knight(Color.BLACK);
-        // boardData[7][4] = new Piece("K");
+        boardData[7][4] = new King(Color.WHITE);
+        boardData[0][4] = new King(Color.BLACK);
 
     }
 
