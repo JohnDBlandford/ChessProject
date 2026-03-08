@@ -1,6 +1,8 @@
 package Pieces;
 
 import util.Color;
+import util.PieceType;
+import Game.Move;
 
 public class Bishop extends Piece {
 
@@ -10,7 +12,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isLegalMove(int fromRow, int fromCol, int toRow, int toCol, Piece[][] boardData) {
+    public boolean isLegalMove(Move move) {
+
+        int fromRow = move.getFromRow();
+        int fromCol = move.getFromCol();
+        int toRow = move.getToRow();
+        int toCol = move.getToCol();
+        Piece[][] boardData = move.getBoard();
 
         // Cant move straight
         if (fromRow == toRow || fromCol == toCol) {
@@ -75,6 +83,12 @@ public class Bishop extends Piece {
             currentCol += colDirection;
         }
         return true;
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
     }
 
 }

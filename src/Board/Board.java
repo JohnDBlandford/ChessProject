@@ -1,7 +1,6 @@
 package Board;
 
-import java.util.Scanner;
-
+import Game.Move;
 import Pieces.*;
 import util.Color;
 
@@ -46,7 +45,8 @@ public class Board {
         boardData[7][6] = new Knight(Color.WHITE);
         boardData[0][1] = new Knight(Color.BLACK);
         boardData[0][6] = new Knight(Color.BLACK);
-        // boardData[7][4] = new Piece("K");
+        boardData[7][4] = new King(Color.WHITE);
+        boardData[0][4] = new King(Color.BLACK);
 
     }
 
@@ -77,110 +77,35 @@ public class Board {
         return boardData;
     }
 
-    // Handles all input and output of moving the pieces. Calls findPiece to
-    // determine where the piece currently is, and then moveTo to check if that
-    // square is legal, and if it is, update the pieces location in the boardData
-    // array.
-    public void movePiece(Scanner scanner, Piece[][] boardData, int turnCount, Color playerTurn) {
+    public Piece pieceAt(int col, int row) {
 
-        while (true) {
+        return boardData[col][row];
 
-            System.out.print("Enter the square of the piece you want to move: ");
-            String movedSquare = scanner.nextLine();
-            Piece movedPiece = findPiece(movedSquare, boardData);
+    }
 
-            if (movedPiece == null) {
-                System.out.println("There is no piece there. Try again.");
-                continue;
+    public void applyMove(Move move) {
+
+        int fromRow = move.getFromRow();
+        int fromCol = move.getFromCol();
+        int toRow = move.getToRow();
+        int toCol = move.getToCol();
+        move.setCapturedPiece(boardData[toRow][toCol]);
+
+        boardData[toRow][toCol] = boardData[fromRow][fromCol];
+        boardData[fromRow][fromCol] = null;
+
+    }
+
+    public Piece[][] makeCopy() {
+        Piece[][] copy = new Piece[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                copy[i][j] = boardData[i][j];
             }
-
-            if (movedPiece.getColor() != playerTurn) {
-                System.out.println("You cannot move an opponent's piece");
-                continue;
-            }
-
-            System.out.print("Enter the destination square (e.g. a3): ");
-            String destSquare = scanner.nextLine();
-
-            if (!moveTo(movedSquare, destSquare, boardData)) {
-                System.out.println("That Square is not available. Try Again");
-                continue;
-            }
-
-            break;
         }
+
+        return copy;
+
     }
 
-    // helper function to find the piece the user wants to move
-    private Piece findPiece(String movedSquare, Piece[][] boardData) {
-
-        if (movedSquare.length() < 2) {
-            return null;
-        }
-
-        char file = movedSquare.charAt(0);
-        char rank = movedSquare.charAt(1);
-
-        int movedCol = file - 'a';
-        int movedRow = numRows - (rank - '0');
-
-        if (movedRow < 0 || movedRow >= numRows || movedCol < 0 || movedCol >= numCols) {
-            return null;
-        }
-
-        if (boardData[movedRow][movedCol] == null) {
-            return null;
-        }
-
-        return boardData[movedRow][movedCol];
-    }
-
-    // helper function to verify if the the user inputs are legal and, if they are,
-    // actually move the piece.
-    private boolean moveTo(String movedSquare, String finalSquare, Piece[][] boardData) {
-
-        // stops array out of bounds errors
-        if (finalSquare.length() < 2) {
-            return false;
-        }
-
-        // converts rank and file (user input) into row and column. Will probably change
-        // the boardData to use rank and file at some point, but this works for now.
-        char fileFrom = movedSquare.charAt(0);
-        char rankFrom = movedSquare.charAt(1);
-        char fileTo = finalSquare.charAt(0);
-        char rankTo = finalSquare.charAt(1);
-
-        int movedCol = fileFrom - 'a';
-        int movedRow = numRows - (rankFrom - '0');
-        int destCol = fileTo - 'a';
-        int destRow = numRows - (rankTo - '0');
-
-        // Giant mess, but this has all the possible invalid inputs a user could enter
-        // that I could think of. May split it up for readability
-        if (movedRow < 0 || movedRow >= numRows || movedCol < 0 || movedCol >= numCols || destRow < 0
-                || destRow >= numRows || destCol < 0 || destCol >= numCols || boardData[movedRow][movedCol] == null) {
-            return false;
-        }
-
-        Piece movedPiece = boardData[movedRow][movedCol];
-        if (!movedPiece.isLegalMove(movedRow, movedCol, destRow, destCol, boardData)) {
-            return false;
-        }
-
-        // Update the boardData array.
-        boardData[destRow][destCol] = boardData[movedRow][movedCol];
-        boardData[movedRow][movedCol] = null;
-        return true;
-    }
-
-    public static boolean isOccupied(Piece[][] boardData, int destRow, int destCol) {
-
-        if (boardData[destRow][destCol] != null) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 }

@@ -1,6 +1,8 @@
 package Pieces;
 
 import util.Color;
+import util.PieceType;
+import Game.Move;
 
 public abstract class Piece {
 
@@ -14,8 +16,10 @@ public abstract class Piece {
         return this.color;
     }
 
-    public abstract boolean isLegalMove(int fromRow, int fromCol, int toRow, int toCol, Piece[][] boardData);
+    public abstract boolean isLegalMove(Move move);
 
     public abstract String getSymbol();
+
+    public abstract PieceType getPieceType();
 
 }

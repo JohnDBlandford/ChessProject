@@ -1,8 +1,12 @@
 package Pieces;
 
 import util.Color;
+import util.PieceType;
+import Game.Move;
 
 public class King extends Piece {
+
+    PieceType KING;
 
     public King(Color color) {
         super(color);
@@ -10,7 +14,14 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isLegalMove(int fromRow, int fromCol, int toRow, int toCol, Piece[][] boardData) {
+    public boolean isLegalMove(Move move) {
+
+        int fromRow = move.getFromRow();
+        int fromCol = move.getFromCol();
+        int toRow = move.getToRow();
+        int toCol = move.getToCol();
+        Piece[][] boardData = move.getBoard();
+
         if ((Math.abs(fromRow - toRow) > 1) || (Math.abs(fromCol - toCol) > 1)) {
             return false;
         }
@@ -33,6 +44,10 @@ public class King extends Piece {
             return "♔";
         }
 
+    }
+
+    public PieceType getPieceType() {
+        return PieceType.KING;
     }
 
 }

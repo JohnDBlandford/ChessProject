@@ -1,6 +1,8 @@
 package Pieces;
 
+import Game.Move;
 import util.Color;
+import util.PieceType;
 
 public class Pawn extends Piece {
 
@@ -9,7 +11,13 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isLegalMove(int movedRow, int movedCol, int destRow, int destCol, Piece[][] boardData) {
+    public boolean isLegalMove(Move move) {
+
+        int movedRow = move.getFromRow();
+        int movedCol = move.getFromCol();
+        int destRow = move.getToRow();
+        int destCol = move.getToCol();
+        Piece[][] boardData = move.getBoard();
 
         int direction = 0;
         if (getColor() == Color.WHITE) {
@@ -49,6 +57,12 @@ public class Pawn extends Piece {
             return "♙";
         }
 
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
     }
 
 }

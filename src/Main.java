@@ -1,51 +1,29 @@
-
 import java.util.Scanner;
-
-import Board.Board;
-import util.Color;
+import Game.Game;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        Board board = new Board(8, 8);
-        int turnCount = 0;
-        Color playerTurn = Color.WHITE;
-        board.printBoard();
-
         while (true) {
-            turnCount += 1;
-            move(board, turnCount, playerTurn);
+            System.out.println("Would you like to start a new game? y/n");
+            String startCheck = scanner.next();
+            if (startCheck.toLowerCase().equals("y")) {
+                Game game = new Game();
+                game.startGame();
+
+                while (!game.isCheckmate()) {
+                    game.executeTurn();
+                }
+                System.out.println(game.getCurrentTurn() + " Has been checkmated. Game over");
+                continue;
+
+            } else {
+                System.out.println("Goodbye!");
+                break;
+            }
 
         }
-
-    }
-
-    public static Color playerTurn(Color playerTurn, int turnCount) {
-
-        if (turnCount % 2 != 0) {
-            return Color.WHITE;
-        } else {
-            return Color.BLACK;
-        }
-
-    }
-
-    private static void move(Board board, int turnCount, Color playerTurn) {
-
-        playerTurn = playerTurn(playerTurn, turnCount);
-
-        System.out.println("This is turn " + turnCount);
-        System.out.println("It is the " + playerTurn + " Player's turn");
-        board.movePiece(scanner, board.getBoardData(), turnCount, playerTurn);
-        board.printBoard();
-
-    }
-
-    public boolean isPlayerTurn(int turnCount) {
-
-        return true;
 
     }
 

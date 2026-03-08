@@ -1,6 +1,8 @@
 package Pieces;
 
 import util.Color;
+import util.PieceType;
+import Game.Move;
 
 public class Rook extends Piece {
 
@@ -9,7 +11,13 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isLegalMove(int fromRow, int fromCol, int toRow, int toCol, Piece[][] boardData) {
+    public boolean isLegalMove(Move move) {
+
+        int fromRow = move.getFromRow();
+        int fromCol = move.getFromCol();
+        int toRow = move.getToRow();
+        int toCol = move.getToCol();
+        Piece[][] boardData = move.getBoard();
 
         if (boardData[toRow][toCol] != null && boardData[toRow][toCol].getColor() == getColor()) {
             System.out.println("You cannot capture your own pieces");
@@ -106,6 +114,12 @@ public class Rook extends Piece {
         }
         return true;
 
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
     }
 
 }

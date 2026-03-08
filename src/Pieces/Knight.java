@@ -1,6 +1,8 @@
 package Pieces;
 
 import util.Color;
+import util.PieceType;
+import Game.Move;
 
 public class Knight extends Piece {
 
@@ -10,7 +12,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isLegalMove(int fromRow, int fromCol, int toRow, int toCol, Piece[][] boardData) {
+    public boolean isLegalMove(Move move) {
+
+        int fromRow = move.getFromRow();
+        int fromCol = move.getFromCol();
+        int toRow = move.getToRow();
+        int toCol = move.getToCol();
 
         if (Math.abs(fromRow - toRow) == 2) {
             if (Math.abs(fromCol - toCol) == 1) {
@@ -46,6 +53,12 @@ public class Knight extends Piece {
             return "♘";
         }
 
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
     }
 
 }
