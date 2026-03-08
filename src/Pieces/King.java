@@ -26,7 +26,6 @@ public class King extends Piece {
         Piece piece = boardData[toRow][toCol];
 
         if (piece != null && piece.getColor() == getColor()) {
-
             return false;
         }
 

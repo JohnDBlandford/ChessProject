@@ -13,9 +13,13 @@ import java.util.ArrayList;
 public class Game {
 
     Board board;
+
     List<Move> moveHistory;
+
     Color currentTurn;
+
     int turnCount;
+
     Scanner scanner = new Scanner(System.in);
 
     public void startGame() {
@@ -61,6 +65,13 @@ public class Game {
                 Move move = new Move(fromRow, fromCol, toRow, toCol, movedPiece, board.getBoardData());
 
                 if (movedPiece.isLegalMove(move)) {
+                    Piece[][] tempBoard = board.makeCopy();
+                    tempBoard[toRow][toCol] = movedPiece;
+                    tempBoard[fromRow][fromCol] = null;
+                    if (isCheck(tempBoard)) {
+                        System.out.println("That move leaves your King in check");
+                        continue;
+                    }
                     board.applyMove(move);
                 } else {
                     System.out.println("That move is not legal");
