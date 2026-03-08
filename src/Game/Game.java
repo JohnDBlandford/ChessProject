@@ -45,7 +45,7 @@ public class Game {
                 int fromCol = movedCords[1];
                 int toRow = finalCords[0];
                 int toCol = finalCords[1];
-                Piece movedPiece = board.pieceAt(fromCol, fromRow);
+                Piece movedPiece = board.pieceAt(fromRow, fromCol);
 
                 if (movedPiece == null) {
                     System.out.println("There is no piece there");
@@ -70,7 +70,7 @@ public class Game {
                 moveHistory.add(move);
 
             } catch (IllegalArgumentException e) {
-                System.out.println("Invalid square, try again.");
+                System.out.println("Invalid Move");
                 continue;
             }
 
