@@ -6,8 +6,6 @@ import Game.Move;
 
 public class King extends Piece {
 
-    PieceType KING;
-
     public King(Color color) {
         super(color);
 
@@ -28,7 +26,7 @@ public class King extends Piece {
         Piece piece = boardData[toRow][toCol];
 
         if (piece != null && piece.getColor() == getColor()) {
-            System.out.println("You can't take your own pieces");
+
             return false;
         }
 

@@ -77,9 +77,9 @@ public class Board {
         return boardData;
     }
 
-    public Piece pieceAt(int col, int row) {
+    public Piece pieceAt(int row, int col) {
 
-        return boardData[col][row];
+        return boardData[row][col];
 
     }
 

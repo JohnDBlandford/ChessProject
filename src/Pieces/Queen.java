@@ -123,8 +123,7 @@ public class Queen extends Piece {
 
     @Override
     public PieceType getPieceType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
+        return PieceType.QUEEN;
     }
 
 }

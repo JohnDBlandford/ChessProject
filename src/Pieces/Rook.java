@@ -20,7 +20,7 @@ public class Rook extends Piece {
         Piece[][] boardData = move.getBoard();
 
         if (boardData[toRow][toCol] != null && boardData[toRow][toCol].getColor() == getColor()) {
-            System.out.println("You cannot capture your own pieces");
+
             return false;
         }
 
@@ -29,14 +29,14 @@ public class Rook extends Piece {
         if (moveDirection.equals("vertical")) {
             boolean check = pieceInWayVertical(fromRow, fromCol, toRow, boardData);
             if (check == false) {
-                System.out.println("There is a piece in the way!");
+
                 return false;
             }
         }
         if (moveDirection.equals("horizontal")) {
             boolean check = pieceInWayHorizontal(fromRow, fromCol, toCol, boardData);
             if (check == false) {
-                System.out.println("There is a piece in the way!");
+
                 return false;
             }
         }
@@ -118,8 +118,7 @@ public class Rook extends Piece {
 
     @Override
     public PieceType getPieceType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
+        return PieceType.ROOK;
     }
 
 }

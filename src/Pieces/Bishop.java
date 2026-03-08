@@ -22,23 +22,23 @@ public class Bishop extends Piece {
 
         // Cant move straight
         if (fromRow == toRow || fromCol == toCol) {
-            System.out.println("Bishop must move diagonally");
+
             return false;
         }
 
         // Diagonal must be 1 to 1
         if (Math.abs(fromRow - toRow) != Math.abs(fromCol - toCol)) {
-            System.out.println("Bishop must move diagonally");
+
             return false;
         }
 
         if (!pieceInWay(fromRow, fromCol, toRow, toCol, boardData)) {
-            System.out.println("There is a piece in the way");
+
             return false;
         }
 
-        if (getColor() == boardData[toRow][toCol].getColor()) {
-            System.out.println("You cannot take your own pieces");
+        if (boardData[toRow][toCol] != null && getColor() == boardData[toRow][toCol].getColor()) {
+
             return false;
         }
         return true;
@@ -87,8 +87,7 @@ public class Bishop extends Piece {
 
     @Override
     public PieceType getPieceType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
+        return PieceType.BISHOP;
     }
 
 }

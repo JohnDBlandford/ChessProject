@@ -24,6 +24,7 @@ public class Game {
         moveHistory = new ArrayList<>();
         currentTurn = Color.WHITE;
         turnCount = 1;
+        board.printBoard();
 
     }
 
@@ -72,6 +73,8 @@ public class Game {
                 System.out.println("Invalid square, try again.");
                 continue;
             }
+
+            board.printBoard();
 
             switchTurn();
 
@@ -165,8 +168,8 @@ public class Game {
         return false;
     }
 
-    private boolean isEnemyPieceOfType(int row, int col, PieceType type) {
-        Piece piece = board.pieceAt(row, col);
+    private boolean correctType(int row, int col, PieceType type, Piece[][] boardData) {
+        Piece piece = boardData[row][col];
         return piece != null && piece.getColor() != currentTurn && piece.getPieceType() == type;
     }
 
@@ -174,7 +177,7 @@ public class Game {
 
         for (int i = 0; i < boardData.length; i++) {
             for (int j = 0; j < boardData[0].length; j++) {
-                Piece piece = board.pieceAt(i, j);
+                Piece piece = boardData[i][j];
                 if (piece != null && piece.getPieceType() == PieceType.KING && piece.getColor() == currentTurn) {
                     return new int[] { i, j };
                 }
@@ -188,7 +191,7 @@ public class Game {
         for (int i = 0; i < boardData.length; i++) {
             for (int j = 0; j < boardData[0].length; j++) {
                 Move tempMove = new Move(kingCords[0], kingCords[1], i, j, tempPiece, boardData);
-                if (tempPiece.isLegalMove(tempMove) && isEnemyPieceOfType(i, j, type)) {
+                if (tempPiece.isLegalMove(tempMove) && correctType(i, j, type, boardData)) {
                     return true;
                 }
             }

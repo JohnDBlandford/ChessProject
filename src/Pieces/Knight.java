@@ -57,8 +57,7 @@ public class Knight extends Piece {
 
     @Override
     public PieceType getPieceType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPieceType'");
+        return PieceType.KNIGHT;
     }
 
 }
