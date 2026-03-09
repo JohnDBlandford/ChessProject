@@ -2,6 +2,8 @@ package Game;
 
 import Pieces.*;
 
+// This class stores relevant info about moves
+
 public class Move {
 
     private int fromRow;

@@ -72,7 +72,6 @@ public class Board {
         System.out.println("   a  b  c  d  e  f  g  h");
     }
 
-    // simple getter for main
     public Piece[][] getBoardData() {
         return boardData;
     }
@@ -83,6 +82,7 @@ public class Board {
 
     }
 
+    // takes a move object and updates the array
     public void applyMove(Move move) {
 
         int fromRow = move.getFromRow();
@@ -95,6 +95,8 @@ public class Board {
         boardData[fromRow][fromCol] = null;
 
     }
+
+    // Makes a copy of the existing board
 
     public Piece[][] makeCopy() {
         Piece[][] copy = new Piece[8][8];

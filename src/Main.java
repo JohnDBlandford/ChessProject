@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import Game.Game;
 
+// The entire point of the giant overhaul is to make this very empty
+
 public class Main {
     static Scanner scanner = new Scanner(System.in);
 

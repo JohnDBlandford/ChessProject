@@ -1,5 +1,7 @@
 package util;
 
+// Contains the parseSquare function + helpers. This function converts user input in algebraic notation to usable coordinates.
+
 public class Parse {
 
     public static int[] parseSquare(String square) {
@@ -40,7 +42,6 @@ public class Parse {
 
         if (square.length() != 2) {
             return false;
-
         }
 
         if (square.charAt(0) > 'h' || square.charAt(0) < 'a') {
