@@ -23,6 +23,10 @@ public class King extends Piece {
         if ((Math.abs(fromRow - toRow) > 1) || (Math.abs(fromCol - toCol) > 1)) {
             return false;
         }
+
+        if ((Math.abs(fromRow - toRow) == 0) && (Math.abs(fromCol - toCol) == 0)) {
+            return false;
+        }
         Piece piece = boardData[toRow][toCol];
 
         if (piece != null && piece.getColor() == getColor()) {

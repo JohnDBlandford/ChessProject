@@ -18,6 +18,11 @@ public class Knight extends Piece {
         int fromCol = move.getFromCol();
         int toRow = move.getToRow();
         int toCol = move.getToCol();
+        Piece[][] boardData = move.getBoard();
+
+        if (boardData[toRow][toCol] != null && boardData[toRow][toCol].getColor() == getColor()) {
+            return false;
+        }
 
         if (Math.abs(fromRow - toRow) == 2) {
             if (Math.abs(fromCol - toCol) == 1) {

@@ -36,7 +36,8 @@ public class Pawn extends Piece {
         // Initial double move
         if (movedCol == destCol
                 && ((getColor() == Color.WHITE && movedRow == 6) || (getColor() == Color.BLACK && movedRow == 1))
-                && destRow == movedRow + 2 * direction && boardData[destRow][destCol] == null) {
+                && destRow == movedRow + 2 * direction && boardData[destRow][destCol] == null
+                && boardData[destRow - 1][destCol] == null) {
             return true;
         }
 

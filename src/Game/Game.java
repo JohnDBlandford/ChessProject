@@ -19,7 +19,7 @@ public class Game {
     // castle/en passant
     List<Move> moveHistory;
 
-    // This tracks whos turn it is
+    // This tracks who's turn it is
     Color currentTurn;
 
     // Number of turns
@@ -81,6 +81,30 @@ public class Game {
                 // Every move is stored as a "move" object to be saved in the move list
                 Move move = new Move(fromRow, fromCol, toRow, toCol, movedPiece, board.getBoardData());
 
+                if (movedPiece.getPieceType() == PieceType.KING && Math.abs(toCol - fromCol) == 2) {
+                    if (!canCastle(moveHistory, move, currentTurn, board)) {
+                        System.out.println("That is not a legal castle");
+                        continue;
+                    } else {
+                        board.applyMove(move);
+                    }
+                } else {
+                    if (movedPiece.isLegalMove(move)) {
+                        Piece[][] tempBoard = board.makeCopy();
+                        tempBoard[toRow][toCol] = movedPiece;
+                        tempBoard[fromRow][fromCol] = null;
+                        if (isCheck(tempBoard)) {
+                            System.out.println("That move leaves your King in check");
+                            continue;
+                        }
+
+                        board.applyMove(move);
+                    } else {
+                        System.out.println("That move is not legal");
+                        continue;
+                    }
+                }
+
                 // checks if the move is legal from the pieces individual logic, and then checks
                 // if the king would be put in check
                 if (movedPiece.isLegalMove(move)) {
@@ -91,6 +115,7 @@ public class Game {
                         System.out.println("That move leaves your King in check");
                         continue;
                     }
+
                     board.applyMove(move);
                 } else {
                     System.out.println("That move is not legal");
@@ -131,7 +156,7 @@ public class Game {
     }
 
     // This functions is used to find out if the king is in check in the current
-    // boardstate.
+    // board state.
     public boolean isCheck(Piece[][] boardData) {
 
         // Calls the findKing function to get the king's position
@@ -208,7 +233,7 @@ public class Game {
                 if (tempBoard[i][j] != null && tempBoard[i][j].getColor() == currentTurn) {
 
                     for (int k = 0; k < tempBoard.length; k++) {
-                        for (int x = 0; x < tempBoard.length; x++) {
+                        for (int x = 0; x < tempBoard[0].length; x++) {
 
                             tempBoard = board.makeCopy();
                             Move tempMove = new Move(i, j, k, x, tempBoard[i][j], tempBoard);
@@ -248,8 +273,123 @@ public class Game {
             }
         }
 
-        // This will never happen
+        // This value is impossible, and accounted for later
         return new int[] { -1, -1 };
+    }
+
+    // work in progress!!!
+    private boolean canCastle(List<Move> moveHistory, Move move, Color currentTurn, Board board) {
+
+        int toCol = move.getToCol();
+        int fromCol = move.getFromCol();
+        int toRow = move.getToRow();
+        int fromRow = move.getFromRow();
+
+        int[] rookCords = findMovedRook(move, board);
+        int rookRow = rookCords[0];
+        int rookCol = rookCords[1];
+
+        Piece movedRook = board.pieceAt(rookRow, rookCol);
+
+        if (movedRook == null) {
+            return false;
+        }
+
+        if (move.getMovedPiece().getPieceType() != PieceType.KING) {
+
+            return false;
+
+        }
+
+        // Move must be within the possible castle moves
+        if (Math.abs(toCol - fromCol) != 2) {
+
+            return false;
+
+        }
+
+        // if there is a move in the history where the king moved
+        for (Move tempMove : moveHistory) {
+            if (tempMove.getMovedPiece().getPieceType() == PieceType.KING
+                    && tempMove.getMovedPiece().getColor() == currentTurn) {
+                return false;
+            }
+        }
+
+        for (Move tempMove : moveHistory) {
+            if (tempMove.getMovedPiece().getPieceType() == PieceType.ROOK
+                    && tempMove.getMovedPiece().getColor() == currentTurn && tempMove.getFromCol() == rookCol
+                    && tempMove.getFromRow() == rookRow) {
+                return false;
+            }
+
+        }
+
+        if (currentTurn == Color.WHITE) {
+            if (toCol > fromCol) {
+                // if piece is in the way
+                if (board.pieceAt(fromCol + 1, fromRow) != null || board.pieceAt(fromCol + 2, fromRow) != null) {
+                    return false;
+                }
+            } else {
+                if (board.pieceAt(fromCol - 1, fromRow) != null || board.pieceAt(fromCol - 2, fromRow) != null
+                        || board.pieceAt(fromCol - 3, fromRow) != null) {
+                    return false;
+                }
+            }
+
+        } else {
+            if (toCol > fromCol) {
+                // if piece is in the way
+                if (board.pieceAt(fromCol + 1, fromRow) != null || board.pieceAt(fromCol + 2, fromRow) != null
+                        || board.pieceAt(fromCol + 3, fromRow) != null) {
+                    return false;
+                }
+            } else {
+                if (board.pieceAt(fromCol - 1, fromRow) != null && board.pieceAt(fromCol - 2, fromRow) != null) {
+                    return false;
+                }
+            }
+
+        }
+
+        // if piece is in the way
+
+        return true;
+
+    }
+
+    private int[] findMovedRook(Move move, Board board) {
+
+        int toCol = move.getToCol();
+        int fromCol = move.getFromCol();
+
+        if (currentTurn == Color.WHITE) {
+
+            // find direction the king is moving
+
+            // see if rook at that square has moved
+            if (toCol > fromCol) {
+                return new int[] { 7, 7 };
+
+            } else {
+                return new int[] { 7, 0 };
+
+            }
+
+        } else {
+
+            // see if rook at that square has moved
+            if (toCol > fromCol) {
+                return new int[] { 0, 7 };
+
+            } else {
+                return new int[] { 0, 0 };
+
+            }
+
+        }
+
     }
 
 }

@@ -85,6 +85,9 @@ public class Queen extends Piece {
         Piece[] col = new Piece[8];
 
         for (int i = 0; i < col.length; i++) {
+            if (i < 0 || i >= 8) {
+                return false;
+            }
             col[i] = boardData[i][colNumber];
         }
 
@@ -106,6 +109,7 @@ public class Queen extends Piece {
         Piece[] row = new Piece[8];
 
         for (int i = 0; i < row.length; i++) {
+
             row[i] = boardData[rowNumber][i];
         }
 
@@ -113,6 +117,9 @@ public class Queen extends Piece {
         int step = (toCol > fromCol) ? 1 : -1;
 
         for (int i = fromCol + step; i != toCol; i += step) {
+            if (i < 0 || i >= 8) {
+                return false;
+            }
             if (boardData[fromRow][i] != null) {
                 return false;
             }
