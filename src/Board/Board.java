@@ -94,6 +94,30 @@ public class Board {
         boardData[toRow][toCol] = boardData[fromRow][fromCol];
         boardData[fromRow][fromCol] = null;
 
+        if (move.getIsCastle()) {
+            // black
+            if (fromRow == 0) {
+                // kingside
+                if (toCol > fromCol) {
+                    boardData[fromRow][toCol - 1] = boardData[0][7];
+                    boardData[0][7] = null;
+                } else {
+                    boardData[fromRow][toCol + 1] = boardData[0][0];
+                    boardData[0][0] = null;
+
+                }
+
+            } else {
+                if (toCol > fromCol) {
+                    boardData[fromRow][toCol - 1] = boardData[7][7];
+                    boardData[7][7] = null;
+                } else {
+                    boardData[fromRow][toCol + 1] = boardData[7][0];
+                    boardData[7][0] = null;
+                }
+            }
+        }
+
     }
 
     // Makes a copy of the existing board

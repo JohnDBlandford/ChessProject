@@ -13,14 +13,16 @@ public class Move {
     private Piece movedPiece;
     private Piece capturedPiece;
     private Piece[][] board;
+    private boolean isCastle;
 
-    public Move(int fromRow, int fromCol, int toRow, int toCol, Piece piece, Piece[][] boardData) {
+    public Move(int fromRow, int fromCol, int toRow, int toCol, Piece piece, Piece[][] boardData, boolean isCastle) {
         this.fromRow = fromRow;
         this.fromCol = fromCol;
         this.toRow = toRow;
         this.toCol = toCol;
         this.movedPiece = piece;
         this.board = boardData;
+        this.isCastle = isCastle;
 
     }
 
@@ -44,6 +46,10 @@ public class Move {
         return toRow;
     }
 
+    public boolean getIsCastle() {
+        return isCastle;
+    }
+
     public Piece[][] getBoard() {
         return board;
     }
@@ -54,6 +60,11 @@ public class Move {
 
     public void setCapturedPiece(Piece capturedPiece) {
         this.capturedPiece = capturedPiece;
+
+    }
+
+    public void setIsCastle(boolean bool) {
+        this.isCastle = bool;
 
     }
 

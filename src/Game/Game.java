@@ -27,7 +27,7 @@ public class Game {
 
     Scanner scanner = new Scanner(System.in);
 
-    // Initilize the board and game
+    // Initialize the board and game
     public void startGame() {
 
         board = new Board(8, 8);
@@ -79,15 +79,21 @@ public class Game {
                 }
 
                 // Every move is stored as a "move" object to be saved in the move list
-                Move move = new Move(fromRow, fromCol, toRow, toCol, movedPiece, board.getBoardData());
+                Move move = new Move(fromRow, fromCol, toRow, toCol, movedPiece, board.getBoardData(), false);
 
-                if (movedPiece.getPieceType() == PieceType.KING && Math.abs(toCol - fromCol) == 2) {
+                // If move is a castle
+                if (movedPiece.getPieceType() == PieceType.KING
+                        && (Math.abs(toCol - fromCol) == 2 || Math.abs(toCol - fromCol) == 3)) {
                     if (!canCastle(moveHistory, move, currentTurn, board)) {
                         System.out.println("That is not a legal castle");
                         continue;
                     } else {
+                        move.setIsCastle(true);
                         board.applyMove(move);
+
                     }
+
+                    // If move is a regular move
                 } else {
                     if (movedPiece.isLegalMove(move)) {
                         Piece[][] tempBoard = board.makeCopy();
@@ -103,23 +109,6 @@ public class Game {
                         System.out.println("That move is not legal");
                         continue;
                     }
-                }
-
-                // checks if the move is legal from the pieces individual logic, and then checks
-                // if the king would be put in check
-                if (movedPiece.isLegalMove(move)) {
-                    Piece[][] tempBoard = board.makeCopy();
-                    tempBoard[toRow][toCol] = movedPiece;
-                    tempBoard[fromRow][fromCol] = null;
-                    if (isCheck(tempBoard)) {
-                        System.out.println("That move leaves your King in check");
-                        continue;
-                    }
-
-                    board.applyMove(move);
-                } else {
-                    System.out.println("That move is not legal");
-                    continue;
                 }
 
                 // Adds the move to the list
@@ -207,7 +196,7 @@ public class Game {
     private boolean isAttackedBy(int[] kingCords, Piece tempPiece, PieceType type, Piece[][] boardData) {
         for (int i = 0; i < boardData.length; i++) {
             for (int j = 0; j < boardData[0].length; j++) {
-                Move tempMove = new Move(kingCords[0], kingCords[1], i, j, tempPiece, boardData);
+                Move tempMove = new Move(kingCords[0], kingCords[1], i, j, tempPiece, boardData, false);
                 if (tempPiece.isLegalMove(tempMove) && correctType(i, j, type, boardData)) {
                     return true;
                 }
@@ -236,7 +225,7 @@ public class Game {
                         for (int x = 0; x < tempBoard[0].length; x++) {
 
                             tempBoard = board.makeCopy();
-                            Move tempMove = new Move(i, j, k, x, tempBoard[i][j], tempBoard);
+                            Move tempMove = new Move(i, j, k, x, tempBoard[i][j], tempBoard, false);
 
                             if (tempBoard[i][j].isLegalMove(tempMove)) {
                                 tempBoard[k][x] = tempBoard[i][j];
@@ -282,7 +271,7 @@ public class Game {
 
         int toCol = move.getToCol();
         int fromCol = move.getFromCol();
-        int toRow = move.getToRow();
+
         int fromRow = move.getFromRow();
 
         int[] rookCords = findMovedRook(move, board);
@@ -326,15 +315,45 @@ public class Game {
         }
 
         if (currentTurn == Color.WHITE) {
+
+            // right - white
             if (toCol > fromCol) {
+
                 // if piece is in the way
                 if (board.pieceAt(fromCol + 1, fromRow) != null || board.pieceAt(fromCol + 2, fromRow) != null) {
+
                     return false;
                 }
+
+                // Castle through check
+                Piece[][] tempBoard = board.makeCopy();
+                int currentCol = fromCol;
+                for (int index = 0; index < 2; index++) {
+                    tempBoard[fromRow][currentCol + 1] = tempBoard[fromRow][currentCol];
+                    tempBoard[fromRow][currentCol] = null;
+                    currentCol++;
+                    if (isCheck(tempBoard)) {
+                        System.out.println("Can't castle through check");
+                        return false;
+                    }
+                }
+
             } else {
                 if (board.pieceAt(fromCol - 1, fromRow) != null || board.pieceAt(fromCol - 2, fromRow) != null
                         || board.pieceAt(fromCol - 3, fromRow) != null) {
                     return false;
+                }
+
+                Piece[][] tempBoard = board.makeCopy();
+                int currentCol = fromCol;
+                for (int index = 0; index < 2; index++) {
+                    tempBoard[fromRow][currentCol - 1] = tempBoard[fromRow][currentCol];
+                    tempBoard[fromRow][currentCol] = null;
+                    currentCol++;
+                    if (isCheck(tempBoard)) {
+                        System.out.println("Can't castle through check");
+                        return false;
+                    }
                 }
             }
 
@@ -345,9 +364,34 @@ public class Game {
                         || board.pieceAt(fromCol + 3, fromRow) != null) {
                     return false;
                 }
+
+                Piece[][] tempBoard = board.makeCopy();
+                int currentCol = fromCol;
+                for (int index = 0; index < 2; index++) {
+                    tempBoard[fromRow][currentCol + 1] = tempBoard[fromRow][currentCol];
+                    tempBoard[fromRow][currentCol] = null;
+                    currentCol++;
+                    if (isCheck(tempBoard)) {
+                        System.out.println("Can't castle through check");
+                        return false;
+                    }
+                }
+
             } else {
-                if (board.pieceAt(fromCol - 1, fromRow) != null && board.pieceAt(fromCol - 2, fromRow) != null) {
+                if (board.pieceAt(fromCol - 1, fromRow) != null || board.pieceAt(fromCol - 2, fromRow) != null) {
                     return false;
+                }
+
+                Piece[][] tempBoard = board.makeCopy();
+                int currentCol = fromCol;
+                for (int index = 0; index < 2; index++) {
+                    tempBoard[fromRow][currentCol - 1] = tempBoard[fromRow][currentCol];
+                    tempBoard[fromRow][currentCol] = null;
+                    currentCol++;
+                    if (isCheck(tempBoard)) {
+                        System.out.println("Can't castle through check");
+                        return false;
+                    }
                 }
             }
 
@@ -384,6 +428,7 @@ public class Game {
                 return new int[] { 0, 7 };
 
             } else {
+
                 return new int[] { 0, 0 };
 
             }
