@@ -2,9 +2,7 @@ package Game;
 
 import Board.Board;
 import Pieces.*;
-import util.Color;
-import util.Parse;
-import util.PieceType;
+import util.*;
 
 import java.util.Scanner;
 import java.util.List;
@@ -27,6 +25,22 @@ public class Game {
 
     Scanner scanner = new Scanner(System.in);
 
+    public Game(List<Move> moveHistory, Board board) {
+        this.board = board;
+        this.moveHistory = moveHistory;
+        turnCount = moveHistory.size() + 1;
+        if (turnCount % 2 == 0) {
+            currentTurn = Color.BLACK;
+        } else {
+            currentTurn = Color.WHITE;
+        }
+
+        board.printBoard();
+    }
+
+    public Game() {
+    }
+
     // Initialize the board and game
     public void startGame() {
 
@@ -47,8 +61,15 @@ public class Game {
 
             // This gets the user input for moves
             System.out.println("It is the " + currentTurn + " player's turn");
-            System.out.println("Which Piece would you like to move");
+            System.out.println("Which Piece would you like to move (input 'save' to save this game");
             String movedSquare = scanner.nextLine();
+            if (movedSquare.equalsIgnoreCase("save")) {
+                System.out.println("What would you like to title this save?");
+                String fileName = scanner.nextLine() + ".txt";
+                FileManager.saveGame(moveHistory, fileName);
+                System.out.println("Game saved as " + fileName);
+                continue;
+            }
             System.out.println("Where do you want to move that piece to?");
             String finalSquare = scanner.nextLine();
 
@@ -82,8 +103,7 @@ public class Game {
                 Move move = new Move(fromRow, fromCol, toRow, toCol, movedPiece, board.getBoardData(), false);
 
                 // If move is a castle
-                if (movedPiece.getPieceType() == PieceType.KING
-                        && (Math.abs(toCol - fromCol) == 2 || Math.abs(toCol - fromCol) == 3)) {
+                if (movedPiece.getPieceType() == PieceType.KING && (Math.abs(toCol - fromCol) == 2)) {
                     if (!canCastle(moveHistory, move, currentTurn, board)) {
                         System.out.println("That is not a legal castle");
                         continue;
@@ -320,7 +340,7 @@ public class Game {
             if (toCol > fromCol) {
 
                 // if piece is in the way
-                if (board.pieceAt(fromCol + 1, fromRow) != null || board.pieceAt(fromCol + 2, fromRow) != null) {
+                if (board.pieceAt(fromCol + 1, fromRow) != null || board.pieceAt(fromRow, fromCol + 2) != null) {
 
                     return false;
                 }
@@ -349,7 +369,7 @@ public class Game {
                 for (int index = 0; index < 2; index++) {
                     tempBoard[fromRow][currentCol - 1] = tempBoard[fromRow][currentCol];
                     tempBoard[fromRow][currentCol] = null;
-                    currentCol++;
+                    currentCol--;
                     if (isCheck(tempBoard)) {
                         System.out.println("Can't castle through check");
                         return false;
@@ -384,7 +404,7 @@ public class Game {
 
                 Piece[][] tempBoard = board.makeCopy();
                 int currentCol = fromCol;
-                for (int index = 0; index < 2; index++) {
+                for (int index = 0; index < 2; index--) {
                     tempBoard[fromRow][currentCol - 1] = tempBoard[fromRow][currentCol];
                     tempBoard[fromRow][currentCol] = null;
                     currentCol++;
