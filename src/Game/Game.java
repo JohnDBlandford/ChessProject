@@ -62,6 +62,24 @@ public class Game {
             System.out.println("It is the " + currentTurn + " player's turn");
             System.out.println("Which Piece would you like to move (input 'save' to save this game)");
             String movedSquare = scanner.nextLine();
+
+            if (movedSquare.toLowerCase().equals("exit")) {
+
+                System.out.println("Would you like to save? y/n");
+                String wantToSave = scanner.nextLine();
+
+                if (wantToSave.equals("y")) {
+                    System.out.println("What would you like to title this save?");
+                    String fileName = scanner.nextLine() + ".txt";
+                    FileManager.saveGame(moveHistory, fileName);
+                    System.out.println("Game saved as " + fileName);
+                }
+
+                System.out.println("Goodbye!");
+                System.exit(0);
+
+            }
+
             if (movedSquare.equalsIgnoreCase("save")) {
                 System.out.println("What would you like to title this save?");
                 String fileName = scanner.nextLine() + ".txt";
@@ -71,6 +89,23 @@ public class Game {
             }
             System.out.println("Where do you want to move that piece to?");
             String finalSquare = scanner.nextLine();
+
+            if (movedSquare.toLowerCase().equals("exit")) {
+
+                System.out.println("Would you like to save? y/n");
+                String wantToSave = scanner.nextLine();
+
+                if (wantToSave.equals("y")) {
+                    System.out.println("What would you like to title this save?");
+                    String fileName = scanner.nextLine() + ".txt";
+                    FileManager.saveGame(moveHistory, fileName);
+                    System.out.println("Game saved as " + fileName);
+                }
+
+                System.out.println("Goodbye!");
+                System.exit(0);
+
+            }
 
             // Calls the parseSquare method to convert the user input into array
             // coordinates.

@@ -37,6 +37,14 @@ public class Replay {
 
             System.out.println("Press \"n\" to make the next move and \"b\" to go back: ");
             String directionInput = scanner.next();
+
+            if (directionInput.toLowerCase().equals("exit")) {
+
+                System.out.println("Goodbye!");
+                System.exit(0);
+
+            }
+
             if (directionInput.equals("n")) {
 
                 if (currentIndex >= moveList.size()) {

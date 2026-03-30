@@ -126,7 +126,6 @@ public class Board {
     }
 
     // Makes a copy of the existing board
-
     public Piece[][] makeCopy() {
         Piece[][] copy = new Piece[8][8];
         for (int i = 0; i < 8; i++) {
