@@ -9,6 +9,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println("At any time type \"exit\" to quit");
+
         while (true) {
 
             String startCheck = playOrReview();
@@ -46,7 +48,13 @@ public class Main {
                 System.out.println(i + 1 + ": " + saves[i]);
             }
             System.out.println("Enter the number of the save you want to replay: ");
-            int saveNumber = scanner.nextInt();
+            String saveString = scanner.next();
+
+            if (saveString.toLowerCase().equals("exit")) {
+                System.exit(0);
+            }
+
+            int saveNumber = Integer.parseInt(saveString);
 
             if (saveNumber > (saves.length + 1) || saveNumber < 1) {
                 System.out.println("That is an invalid selection");
@@ -69,8 +77,14 @@ public class Main {
 
         Game game = null;
         System.out.println("Enter 1 to start a new game or 2 to load your own game");
-        int input = scanner.nextInt();
-        scanner.nextLine();
+        String inputString = scanner.next();
+
+        if (inputString.toLowerCase().equals("exit")) {
+            System.out.println("Goodbye!");
+            System.exit(0);
+        }
+
+        int input = Integer.parseInt(inputString);
 
         if (input == 1) {
 
@@ -81,6 +95,12 @@ public class Main {
 
             System.out.println("What is the name of the save? do not include .txt");
             String fileName = scanner.nextLine();
+
+            if (fileName.toLowerCase().equals("exit")) {
+                System.out.println("Goodbye!");
+                System.exit(0);
+            }
+
             File file = new File(fileName + ".txt");
             game = FileManager.loadGame(file);
         }
