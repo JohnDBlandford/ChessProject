@@ -53,7 +53,6 @@ public class Game {
     }
 
     // Everything that happens in a turn is here.
-
     public void executeTurn() {
 
         // While true loop, broken out of with break/continue
@@ -61,7 +60,7 @@ public class Game {
 
             // This gets the user input for moves
             System.out.println("It is the " + currentTurn + " player's turn");
-            System.out.println("Which Piece would you like to move (input 'save' to save this game");
+            System.out.println("Which Piece would you like to move (input 'save' to save this game)");
             String movedSquare = scanner.nextLine();
             if (movedSquare.equalsIgnoreCase("save")) {
                 System.out.println("What would you like to title this save?");
@@ -149,23 +148,13 @@ public class Game {
 
     }
 
-    // Helper function used to iterate the turn
-    private void switchTurn() {
-
-        this.turnCount += 1;
-        if (turnCount % 2 == 0) {
-            this.currentTurn = Color.BLACK;
-        } else {
-            this.currentTurn = Color.WHITE;
-        }
-    }
-
+    // getter for current turn
     public Color getCurrentTurn() {
         return this.currentTurn;
     }
 
     // This functions is used to find out if the king is in check in the current
-    // board state.
+    // board state
     public boolean isCheck(Piece[][] boardData) {
 
         // Calls the findKing function to get the king's position
@@ -271,7 +260,7 @@ public class Game {
         return piece != null && piece.getColor() != currentTurn && piece.getPieceType() == type;
     }
 
-    // Finds the king
+    // Finds the king and returns the coords
     private int[] findKing(Piece[][] boardData) {
         for (int i = 0; i < boardData.length; i++) {
             for (int j = 0; j < boardData[0].length; j++) {
@@ -286,7 +275,7 @@ public class Game {
         return new int[] { -1, -1 };
     }
 
-    // work in progress!!!
+    // returns if the king can castle
     private boolean canCastle(List<Move> moveHistory, Move move, Color currentTurn, Board board) {
 
         int toCol = move.getToCol();
@@ -423,6 +412,7 @@ public class Game {
 
     }
 
+    // finds the rook and returns its coords
     private int[] findMovedRook(Move move, Board board) {
 
         int toCol = move.getToCol();
@@ -455,6 +445,17 @@ public class Game {
 
         }
 
+    }
+
+    // Helper function used to iterate the turn
+    private void switchTurn() {
+
+        this.turnCount += 1;
+        if (turnCount % 2 == 0) {
+            this.currentTurn = Color.BLACK;
+        } else {
+            this.currentTurn = Color.WHITE;
+        }
     }
 
 }

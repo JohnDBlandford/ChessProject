@@ -1,0 +1,76 @@
+package Game;
+
+import java.io.File;
+import java.util.List;
+import java.util.Scanner;
+
+import Board.Board;
+import util.FileManager;
+
+public class Replay {
+
+    private Scanner scanner = new Scanner(System.in);
+    private List<Move> moveList;
+    private Board board;
+    private int currentIndex;
+
+    public Replay(String fileName) {
+        File file = new File("../saves/" + fileName);
+        this.moveList = FileManager.getMoveList(file);
+    }
+
+    public void replayGame() {
+
+        board = new Board(8, 8);
+        currentIndex = 0;
+        boolean printBoardCheck = true;
+
+        while (true) {
+
+            if (printBoardCheck) {
+                board.printBoard();
+                System.out.println("This is turn " + (currentIndex + 1));
+            } else {
+                printBoardCheck = true;
+
+            }
+
+            System.out.println("Press \"n\" to make the next move and \"b\" to go back: ");
+            String directionInput = scanner.next();
+            if (directionInput.equals("n")) {
+
+                if (currentIndex >= moveList.size()) {
+                    System.out.println("This is the end of the game");
+                    currentIndex--;
+                    printBoardCheck = false;
+                    continue;
+                }
+                board.applyMove(moveList.get(currentIndex));
+                currentIndex++;
+
+            } else if (directionInput.equals("b")) {
+                currentIndex--;
+
+                if (currentIndex < 0) {
+                    System.out.println("This is the start of the game, you cannot go back");
+                    printBoardCheck = false;
+                    currentIndex = 0;
+                    continue;
+                }
+                board = new Board(8, 8);
+
+                for (int i = 0; i < currentIndex; i++) {
+                    board.applyMove(moveList.get(i));
+
+                }
+
+            } else {
+                System.out.println("invalid command");
+                printBoardCheck = false;
+            }
+
+        }
+
+    }
+
+}

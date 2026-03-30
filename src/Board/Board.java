@@ -10,6 +10,7 @@ public class Board {
     private int numRows = 8;
     private int numCols = 8;
     private Piece[][] boardData;
+
     // I stored that board stat as an 8x8 array of Piece objects. Spaces without
     // objects are considered null for future logic.
 
@@ -52,6 +53,9 @@ public class Board {
 
     // This function prints the board in its current state from the boardData array
     public void printBoard() {
+
+        System.out.print("\033[2J\033[H");
+
         for (int row = 0; row < 8; row++) {
             int rank = 8 - row;
             System.out.print(rank + " ");
@@ -70,6 +74,7 @@ public class Board {
         }
 
         System.out.println("   a  b  c  d  e  f  g  h");
+
     }
 
     public Piece[][] getBoardData() {
