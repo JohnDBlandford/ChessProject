@@ -11,17 +11,17 @@ import java.util.ArrayList;
 public class Game {
 
     // The board is stored in a object
-    Board board;
+    private Board board;
 
     // move history stored in a list. This is so that we know if its legal to
     // castle/en passant
-    List<Move> moveHistory;
+    private List<Move> moveHistory;
 
     // This tracks who's turn it is
-    Color currentTurn;
+    private Color currentTurn;
 
     // Number of turns
-    int turnCount;
+    private int turnCount;
 
     Scanner scanner = new Scanner(System.in);
 

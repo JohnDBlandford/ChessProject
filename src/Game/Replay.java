@@ -3,9 +3,10 @@ package Game;
 import java.io.File;
 import java.util.List;
 import java.util.Scanner;
-
 import Board.Board;
 import util.FileManager;
+
+// This classes is similar to the Game class, but for replays.
 
 public class Replay {
 
@@ -14,11 +15,13 @@ public class Replay {
     private Board board;
     private int currentIndex;
 
+    // Constructor to find file via path from just name
     public Replay(String fileName) {
         File file = new File("../saves/" + fileName);
         this.moveList = FileManager.getMoveList(file);
     }
 
+    // Similar to the executeTurn function in Game
     public void replayGame() {
 
         board = new Board(8, 8);

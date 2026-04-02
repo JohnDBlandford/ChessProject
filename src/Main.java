@@ -77,7 +77,7 @@ public class Main {
 
         Game game = null;
         System.out.println("Enter 1 to start a new game or 2 to load your own game");
-        String inputString = scanner.next();
+        String inputString = scanner.nextLine();
 
         if (inputString.toLowerCase().equals("exit")) {
             System.out.println("Goodbye!");
@@ -101,7 +101,7 @@ public class Main {
                 System.exit(0);
             }
 
-            File file = new File(fileName + ".txt");
+            File file = new File("../saves/" + fileName + ".txt");
             game = FileManager.loadGame(file);
         }
 
