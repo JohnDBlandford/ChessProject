@@ -101,7 +101,8 @@ public class Main {
                 System.exit(0);
             }
 
-            File file = new File("../saves/" + fileName + ".txt");
+            File file = new File("saves/" + fileName + ".txt");
+
             game = FileManager.loadGame(file);
         }
 
