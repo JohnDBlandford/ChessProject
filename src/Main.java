@@ -103,6 +103,8 @@ public class Main {
 
             File file = new File("saves/" + fileName + ".txt");
 
+            System.out.println(file.getAbsolutePath());
+
             game = FileManager.loadGame(file);
         }
 

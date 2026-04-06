@@ -1,0 +1,4 @@
+6,4,4,4,PAWN,WHITE,false
+1,4,3,4,PAWN,BLACK,false
+7,5,4,2,BISHOP,WHITE,false
+1,0,3,0,PAWN,BLACK,false

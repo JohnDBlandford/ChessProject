@@ -1,0 +1,2 @@
+6,4,4,4,PAWN,WHITE,false
+0,6,2,5,KNIGHT,BLACK,false
