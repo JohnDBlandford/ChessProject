@@ -36,7 +36,8 @@ public class Main {
 
     private static void replayGame() {
 
-        File savesFolder = new File("../saves");
+        File savesFolder = new File("saves");
+
         String[] saves = savesFolder.list();
 
         if (saves.length == 0) {
@@ -87,25 +88,38 @@ public class Main {
         int input = Integer.parseInt(inputString);
 
         if (input == 1) {
-
             game = new Game();
             game.startGame();
-
         } else {
+            File savesFolder = new File("saves");
+            String[] saves = savesFolder.list();
 
-            System.out.println("What is the name of the save? do not include .txt");
-            String fileName = scanner.nextLine();
+            if (saves == null || saves.length == 0) {
+                System.out.println("You have no saves. You must add one to the saves folder");
+            } else {
+                System.out.println("---------------");
+                for (int i = 0; i < saves.length; i++) {
+                    System.out.println(i + 1 + ": " + saves[i]);
+                }
+                System.out.println("Enter the number of the save you want to load: ");
+                String saveString = scanner.next();
+                scanner.nextLine();
 
-            if (fileName.toLowerCase().equals("exit")) {
-                System.out.println("Goodbye!");
-                System.exit(0);
+                if (saveString.toLowerCase().equals("exit")) {
+                    System.exit(0);
+                }
+
+                int saveNumber = Integer.parseInt(saveString);
+
+                if (saveNumber > saves.length || saveNumber < 1) {
+                    System.out.println("That is an invalid selection");
+                    playGame();
+                    return;
+                }
+
+                File file = new File("saves/" + saves[saveNumber - 1]);
+                game = FileManager.loadGame(file);
             }
-
-            File file = new File("saves/" + fileName + ".txt");
-
-            System.out.println(file.getAbsolutePath());
-
-            game = FileManager.loadGame(file);
         }
 
         if (game != null) {
@@ -114,7 +128,6 @@ public class Main {
             }
             System.out.println(game.getCurrentTurn() + " Has been checkmated. Game over");
         }
-
     }
 
     private static String playOrReview() {

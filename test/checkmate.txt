@@ -1,0 +1,7 @@
+6,4,4,4,PAWN,WHITE,false
+1,4,3,4,PAWN,BLACK,false
+7,5,4,2,BISHOP,WHITE,false
+0,1,2,2,KNIGHT,BLACK,false
+7,3,3,7,QUEEN,WHITE,false
+0,5,1,4,BISHOP,BLACK,false
+3,7,1,5,QUEEN,WHITE,false

@@ -17,7 +17,7 @@ public class Replay {
 
     // Constructor to find file via path from just name
     public Replay(String fileName) {
-        File file = new File("../saves/" + fileName);
+        File file = new File("saves/" + fileName);
         this.moveList = FileManager.getMoveList(file);
     }
 

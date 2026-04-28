@@ -20,6 +20,14 @@ public class Queen extends Piece {
         int toCol = move.getToCol();
         Piece[][] boardData = move.getBoard();
 
+        if (boardData[toRow][toCol] != null && boardData[toRow][toCol].getColor() == getColor()) {
+            return false;
+        }
+
+        if (fromRow == toRow && fromCol == toCol) {
+            return false;
+        }
+
         if (fromRow == toRow) {
             return pieceInWayHorizontal(fromRow, fromCol, toCol, boardData);
 
