@@ -1,5 +1,10 @@
+import java.awt.*;
 import java.io.File;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import Game.Game;
 import Game.Replay;
 import util.FileManager;
@@ -8,6 +13,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println(new File("").getAbsolutePath());
 
         System.out.println("At any time type \"exit\" to quit");
 
@@ -123,10 +129,18 @@ public class Main {
         }
 
         if (game != null) {
-            while (!game.isCheckmate()) {
-                game.executeTurn();
-            }
-            System.out.println(game.getCurrentTurn() + " Has been checkmated. Game over");
+            JFrame frame = new JFrame("Chess");
+            JLabel statusLabel = new JLabel(" ");
+            GUI boardPanel = new GUI(game, statusLabel);
+
+            frame.setLayout(new BorderLayout());
+            frame.add(boardPanel, BorderLayout.CENTER);
+            frame.add(statusLabel, BorderLayout.SOUTH);
+
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
         }
     }
 

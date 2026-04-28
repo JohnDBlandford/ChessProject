@@ -548,9 +548,14 @@ public class Game {
         for (Move move : moveHistory) {
             if (move.getCapturedPiece() != null && move.getCapturedPiece().getColor() == color) {
                 captured.add(move.getCapturedPiece());
+
             }
         }
         return captured;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
 }
