@@ -5,6 +5,7 @@ import Pieces.*;
 import util.*;
 
 import java.util.Scanner;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -179,6 +180,51 @@ public class Game {
 
             break;
 
+        }
+
+    }
+
+    public MoveResult tryMove(int fromRow, int fromCol, int toRow, int toCol) {
+        Piece movedPiece = board.pieceAt(fromRow, fromCol);
+
+        if (movedPiece == null) {
+            return MoveResult.NO_PIECE;
+        }
+
+        if (movedPiece.getColor() != currentTurn) {
+            return MoveResult.WRONG_TURN;
+        }
+
+        Move move = new Move(fromRow, fromCol, toRow, toCol, movedPiece, board.getBoardData(), false);
+
+        if (movedPiece.getPieceType() == PieceType.KING && (Math.abs(toCol - fromCol) == 2)) {
+            if (!canCastle(moveHistory, move, currentTurn, board)) {
+
+                return MoveResult.CASTLE_ILLEGAL;
+            } else {
+                move.setIsCastle(true);
+                board.applyMove(move);
+                moveHistory.add(move);
+                switchTurn();
+                return MoveResult.SUCCESS;
+
+            }
+
+        } else {
+            if (movedPiece.isLegalMove(move)) {
+                Piece[][] tempBoard = board.makeCopy();
+                tempBoard[toRow][toCol] = movedPiece;
+                tempBoard[fromRow][fromCol] = null;
+                if (isCheck(tempBoard)) {
+                    return MoveResult.LEAVES_KING_IN_CHECK;
+                }
+                board.applyMove(move);
+                moveHistory.add(move);
+                switchTurn();
+                return MoveResult.SUCCESS;
+            } else {
+                return MoveResult.ILLEGAL_MOVE;
+            }
         }
 
     }
@@ -491,6 +537,20 @@ public class Game {
         } else {
             this.currentTurn = Color.WHITE;
         }
+    }
+
+    public List<Move> getMoveHistory() {
+        return moveHistory;
+    }
+
+    public List<Piece> getCapturedPieces(Color color) {
+        List<Piece> captured = new ArrayList<>();
+        for (Move move : moveHistory) {
+            if (move.getCapturedPiece() != null && move.getCapturedPiece().getColor() == color) {
+                captured.add(move.getCapturedPiece());
+            }
+        }
+        return captured;
     }
 
 }
