@@ -73,10 +73,8 @@ public class GUI extends JPanel {
                     int newGridY = (e.getY() - dragOffsetY + TILE_SIZE / 2) / TILE_SIZE;
 
                     // prevent piece from going offscreen
-
-                    MoveResult result = game.tryMove(fromRow, fromCol, newGridY, newGridX);
-
                     dragging = false;
+                    MoveResult result = game.tryMove(fromRow, fromCol, newGridY, newGridX);
 
                     switch (result) {
                         case SUCCESS:
@@ -84,17 +82,22 @@ public class GUI extends JPanel {
                             repaint();
                             break;
                         case NO_PIECE:
+                            repaint();
                             break;
                         case WRONG_TURN:
+                            repaint();
                             break;
                         case ILLEGAL_MOVE:
                             moveLabel.setText("That Move is not Legal");
+                            repaint();
                             break;
                         case LEAVES_KING_IN_CHECK:
                             moveLabel.setText("Your King would be in check");
+                            repaint();
                             break;
                         case CASTLE_ILLEGAL:
                             moveLabel.setText("You cannot castle like that");
+                            repaint();
                             break;
                     }
 
@@ -143,7 +146,7 @@ public class GUI extends JPanel {
                 g.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 Piece currentPiece = board.pieceAt(row, col);
 
-                if (currentPiece != null) {
+                if (currentPiece != null && !(dragging && row == fromRow && col == fromCol)) {
                     pieceImage = pieceImages.get(currentPiece.getColor() + "_" + currentPiece.getPieceType());
                     g.drawImage(pieceImage, col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
 
