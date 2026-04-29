@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import Game.Game;
 import Game.Replay;
@@ -13,7 +15,6 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println(new File("").getAbsolutePath());
 
         System.out.println("At any time type \"exit\" to quit");
 
@@ -130,13 +131,21 @@ public class Main {
 
         if (game != null) {
             JFrame frame = new JFrame("Chess");
-            JLabel statusLabel = new JLabel(" ");
-            GUI boardPanel = new GUI(game, statusLabel);
+            JLabel statusLabel = new JLabel(" ", SwingConstants.CENTER);
+            JPanel topCaptured = new JPanel();
+            JPanel bottomCaptured = new JPanel();
+            GUI boardPanel = new GUI(game, statusLabel, bottomCaptured, topCaptured);
 
             frame.setLayout(new BorderLayout());
-            frame.add(boardPanel, BorderLayout.CENTER);
-            frame.add(statusLabel, BorderLayout.SOUTH);
+            JPanel centerWrapper = new JPanel(new GridBagLayout());
+            centerWrapper.add(boardPanel);
+            JPanel bottomBar = new JPanel(new BorderLayout());
+            bottomBar.add(bottomCaptured, BorderLayout.SOUTH);
+            bottomBar.add(statusLabel, BorderLayout.NORTH);
 
+            frame.add(centerWrapper, BorderLayout.CENTER);
+            frame.add(topCaptured, BorderLayout.NORTH);
+            frame.add(bottomBar, BorderLayout.SOUTH);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setLocationRelativeTo(null);

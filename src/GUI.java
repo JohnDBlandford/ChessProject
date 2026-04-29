@@ -4,6 +4,7 @@ import Game.Game;
 import Pieces.Piece;
 import Board.Board;
 import util.*;
+import util.Color;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -26,9 +27,14 @@ public class GUI extends JPanel {
     private Game game;
     private Map<String, Image> pieceImages = new HashMap<>();
     private int fromRow, fromCol;
-    JLabel moveLabel;
+    private JLabel moveLabel;
+    private JPanel leftSidebar;
+    private JPanel rightSidebar;
 
-    public GUI(Game game, JLabel label) {
+    public GUI(Game game, JLabel label, JPanel rightSidebar, JPanel leftSidebar) {
+
+        this.leftSidebar = leftSidebar;
+        this.rightSidebar = rightSidebar;
 
         this.moveLabel = label;
 
@@ -79,16 +85,19 @@ public class GUI extends JPanel {
                     switch (result) {
                         case SUCCESS:
                             moveLabel.setText("");
+                            updateCaptureList();
                             repaint();
                             break;
                         case NO_PIECE:
+
                             repaint();
                             break;
                         case WRONG_TURN:
+                            moveLabel.setText("Wrong Turn");
                             repaint();
                             break;
                         case ILLEGAL_MOVE:
-                            moveLabel.setText("That Move is not Legal");
+                            moveLabel.setText("That piece cannot move like that");
                             repaint();
                             break;
                         case LEAVES_KING_IN_CHECK:
@@ -162,6 +171,33 @@ public class GUI extends JPanel {
                     mouseY - dragOffsetY, TILE_SIZE, TILE_SIZE, this);
 
         }
+
+    }
+
+    private void updateCaptureList() {
+
+        leftSidebar.removeAll();
+        rightSidebar.removeAll();
+
+        for (Piece piece : game.getCapturedPieces(Color.WHITE)) {
+            String key = piece.getColor() + "_" + piece.getPieceType();
+            Image scaled = pieceImages.get(key);
+            rightSidebar.add(new JLabel(new ImageIcon(scaled)));
+
+        }
+
+        for (Piece piece : game.getCapturedPieces(Color.BLACK)) {
+
+            String key = piece.getColor() + "_" + piece.getPieceType();
+            Image scaled = pieceImages.get(key);
+            leftSidebar.add(new JLabel(new ImageIcon(scaled)));
+
+        }
+
+        leftSidebar.revalidate();
+        leftSidebar.repaint();
+        rightSidebar.revalidate();
+        rightSidebar.repaint();
 
     }
 
