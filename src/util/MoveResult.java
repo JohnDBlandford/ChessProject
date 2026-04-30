@@ -7,5 +7,6 @@ public enum MoveResult {
     NO_PIECE,
     ILLEGAL_MOVE,
     LEAVES_KING_IN_CHECK,
-    CASTLE_ILLEGAL
+    CASTLE_ILLEGAL,
+    CHECKMATE,
 }

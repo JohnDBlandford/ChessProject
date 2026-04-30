@@ -89,7 +89,6 @@ public class GUI extends JPanel {
                             repaint();
                             break;
                         case NO_PIECE:
-
                             repaint();
                             break;
                         case WRONG_TURN:
@@ -106,6 +105,10 @@ public class GUI extends JPanel {
                             break;
                         case CASTLE_ILLEGAL:
                             moveLabel.setText("You cannot castle like that");
+                            repaint();
+                            break;
+                        case CHECKMATE:
+                            moveLabel.setText("Checkmate");
                             repaint();
                             break;
                     }

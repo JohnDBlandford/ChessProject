@@ -206,6 +206,9 @@ public class Game {
                 board.applyMove(move);
                 moveHistory.add(move);
                 switchTurn();
+                if (isCheckmate()) {
+                    return MoveResult.CHECKMATE;
+                }
                 return MoveResult.SUCCESS;
 
             }
@@ -221,6 +224,9 @@ public class Game {
                 board.applyMove(move);
                 moveHistory.add(move);
                 switchTurn();
+                if (isCheckmate()) {
+                    return MoveResult.CHECKMATE;
+                }
                 return MoveResult.SUCCESS;
             } else {
                 return MoveResult.ILLEGAL_MOVE;
@@ -249,31 +255,31 @@ public class Game {
         // squares.
 
         // Pawn
-        Piece tempPawn = new Pawn(currentTurn.opposite());
+        Piece tempPawn = new Pawn(currentTurn);
         if (isAttackedBy(kingCords, tempPawn, PieceType.PAWN, boardData)) {
             return true;
         }
 
         // Knight
-        Piece tempKnight = new Knight(currentTurn.opposite());
+        Piece tempKnight = new Knight(currentTurn);
         if (isAttackedBy(kingCords, tempKnight, PieceType.KNIGHT, boardData)) {
             return true;
         }
 
         // Bishop
-        Piece tempBishop = new Bishop(currentTurn.opposite());
+        Piece tempBishop = new Bishop(currentTurn);
         if (isAttackedBy(kingCords, tempBishop, PieceType.BISHOP, boardData)) {
             return true;
         }
 
         // Rook
-        Piece tempRook = new Rook(currentTurn.opposite());
+        Piece tempRook = new Rook(currentTurn);
         if (isAttackedBy(kingCords, tempRook, PieceType.ROOK, boardData)) {
             return true;
         }
 
         // Queen
-        Piece tempQueen = new Queen(currentTurn.opposite());
+        Piece tempQueen = new Queen(currentTurn);
         if (isAttackedBy(kingCords, tempQueen, PieceType.QUEEN, boardData)) {
             return true;
         }
