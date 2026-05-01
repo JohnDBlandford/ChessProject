@@ -17,7 +17,7 @@ public class Replay {
 
     // Constructor to find file via path from just name
     public Replay(String fileName) {
-        File file = new File("saves/" + fileName);
+        File file = new File("src/saves/" + fileName);
         this.moveList = FileManager.getMoveList(file);
     }
 
@@ -82,6 +82,49 @@ public class Replay {
 
         }
 
+    }
+
+    public void startReplay() {
+        board = new Board(8, 8);
+        currentIndex = 0;
+    }
+
+    public boolean moveForward() {
+
+        if (currentIndex >= moveList.size()) {
+            return false;
+        }
+
+        board.applyMove(moveList.get(currentIndex));
+        currentIndex++;
+        return true;
+    }
+
+    public boolean moveBackwards() {
+
+        if (currentIndex <= 0) {
+            return false;
+        }
+
+        currentIndex--;
+        board = new Board(8, 8);
+        for (int i = 0; i < currentIndex; i++) {
+            board.applyMove(moveList.get(i));
+        }
+        return true;
+
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public List<Move> getMoveList() {
+        return moveList;
     }
 
 }

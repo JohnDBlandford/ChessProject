@@ -1,3 +1,5 @@
+package GUI;
+
 import javax.swing.*;
 
 import Game.Game;
@@ -12,7 +14,7 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GUI extends JPanel {
+public class GUIgame extends JPanel {
 
     private static final long serialVersionUID = -8645634744350993870L;
 
@@ -31,7 +33,7 @@ public class GUI extends JPanel {
     private JPanel leftSidebar;
     private JPanel rightSidebar;
 
-    public GUI(Game game, JLabel label, JPanel rightSidebar, JPanel leftSidebar) {
+    public GUIgame(Game game, JLabel label, JPanel rightSidebar, JPanel leftSidebar) {
 
         this.leftSidebar = leftSidebar;
         this.rightSidebar = rightSidebar;
@@ -201,6 +203,32 @@ public class GUI extends JPanel {
         leftSidebar.repaint();
         rightSidebar.revalidate();
         rightSidebar.repaint();
+
+    }
+
+    public static void start(String gameType, Game game) {
+
+        JFrame frame = new JFrame("Chess Game");
+
+        JPanel topCaptured = new JPanel();
+        JPanel bottomCaptured = new JPanel();
+        JLabel statusLabel = new JLabel(" ", SwingConstants.CENTER);
+        GUIgame boardPanel = new GUIgame(game, statusLabel, bottomCaptured, topCaptured);
+
+        frame.setLayout(new BorderLayout());
+        JPanel centerWrapper = new JPanel(new GridBagLayout());
+        centerWrapper.add(boardPanel);
+        JPanel bottomBar = new JPanel(new BorderLayout());
+        bottomBar.add(bottomCaptured, BorderLayout.SOUTH);
+        bottomBar.add(statusLabel, BorderLayout.NORTH);
+
+        frame.add(centerWrapper, BorderLayout.CENTER);
+        frame.add(topCaptured, BorderLayout.NORTH);
+        frame.add(bottomBar, BorderLayout.SOUTH);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 
     }
 

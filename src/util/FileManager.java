@@ -15,7 +15,7 @@ public class FileManager {
 
     public static void saveGame(List<Move> moveHistory, String fileName) {
         try {
-            PrintWriter writer = new PrintWriter("../saves/" + fileName);
+            PrintWriter writer = new PrintWriter("src/saves/" + fileName);
 
             for (Move move : moveHistory) {
                 writer.println(move.getFromRow() + "," + move.getFromCol() + "," +

@@ -1,12 +1,9 @@
-import java.awt.*;
+
 import java.io.File;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
+import GUI.GUIgame;
+import GUI.GUIreplay;
 import Game.Game;
 import Game.Replay;
 import util.FileManager;
@@ -43,7 +40,7 @@ public class Main {
 
     private static void replayGame() {
 
-        File savesFolder = new File("saves");
+        File savesFolder = new File("src/saves");
 
         String[] saves = savesFolder.list();
 
@@ -72,7 +69,8 @@ public class Main {
                 Replay replay = new Replay(saves[saveNumber - 1]);
                 for (int i = 0; i < saves.length; i++) {
                     if (saveNumber == i + 1) {
-                        replay.replayGame();
+
+                        GUIreplay.start(replay);
                     }
                 }
 
@@ -98,7 +96,7 @@ public class Main {
             game = new Game();
             game.startGame();
         } else {
-            File savesFolder = new File("saves");
+            File savesFolder = new File("src/saves");
             String[] saves = savesFolder.list();
 
             if (saves == null || saves.length == 0) {
@@ -124,32 +122,13 @@ public class Main {
                     return;
                 }
 
-                File file = new File("saves/" + saves[saveNumber - 1]);
+                File file = new File("src/saves/" + saves[saveNumber - 1]);
                 game = FileManager.loadGame(file);
             }
         }
 
         if (game != null) {
-            JFrame frame = new JFrame("Chess");
-            JLabel statusLabel = new JLabel(" ", SwingConstants.CENTER);
-            JPanel topCaptured = new JPanel();
-            JPanel bottomCaptured = new JPanel();
-            GUI boardPanel = new GUI(game, statusLabel, bottomCaptured, topCaptured);
-
-            frame.setLayout(new BorderLayout());
-            JPanel centerWrapper = new JPanel(new GridBagLayout());
-            centerWrapper.add(boardPanel);
-            JPanel bottomBar = new JPanel(new BorderLayout());
-            bottomBar.add(bottomCaptured, BorderLayout.SOUTH);
-            bottomBar.add(statusLabel, BorderLayout.NORTH);
-
-            frame.add(centerWrapper, BorderLayout.CENTER);
-            frame.add(topCaptured, BorderLayout.NORTH);
-            frame.add(bottomBar, BorderLayout.SOUTH);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+            GUIgame.start("game", game);
         }
     }
 
